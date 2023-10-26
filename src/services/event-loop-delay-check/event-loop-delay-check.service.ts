@@ -10,7 +10,7 @@ export class EventLoopDelayCheckService implements IEventLoopDelayCheck.Service 
 
     constructor(private _hrTimeService: IHRTimeService = new HRTimeService()) {}
 
-    public start({ maxDelay }: IEventLoopDelayCheck.StartOptions): void {
+    public start({ minDelay: maxDelay }: IEventLoopDelayCheck.StartOptions): void {
         this._lastCheck = this._hrTimeService.getNow();
         this._sampleInterval = maxDelay ?? this._sampleInterval;
 

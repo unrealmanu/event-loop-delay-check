@@ -6,6 +6,6 @@ export declare module IEventLoopDelayCheck {
     }
 
     export interface StartOptions {
-        maxDelay?: number;
+        minDelay?: number;
     }
 }
