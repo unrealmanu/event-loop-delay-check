@@ -5,7 +5,7 @@ This project is to check whether there is a delay in the execution of the event 
 ### Example
 ```typescript
 const eventLoopDelayCheckService = new EventLoopDelayCheckService();
-eventLoopDelayCheckService.start({ minDelay: 1000 });
+eventLoopDelayCheckService.start({ minDelay: 1000, sampleInterval: 1000 });
 ```
 
 
