@@ -2,7 +2,12 @@
 
 This project is to check whether there is a delay in the execution of the event loop activities
 
-## example
+### Example
+```typescript
+const eventLoopDelayCheckService = new EventLoopDelayCheckService();
+eventLoopDelayCheckService.start({ minDelay: 1000 });
+```
+
 
 ### Command
 
