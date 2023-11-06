@@ -1,6 +1,6 @@
-import sleep from 'atomic-sleep';
-import { EventLoopDelayCheckService } from './event-loop-delay-check.service';
+import { spawnSync } from 'node:child_process';
 import { IEventLoopDelayCheck } from './event-loop-delay-check.interface';
+import { EventLoopDelayCheckService } from './event-loop-delay-check.service';
 
 describe('EventLoopDelayCheck', () => {
     let service: IEventLoopDelayCheck.Service;
@@ -14,23 +14,23 @@ describe('EventLoopDelayCheck', () => {
 
     it('should be expect event loop is not delayed', (done) => {
         service.start(options);
-        const delay = service.getEventLoopDelay();
+        const delayInMs = service.getEventLoopDelay();
 
-        setTimeout(() => {
-            expect(delay).toBe(0);
+        setImmediate(() => {
+            expect(delayInMs).toBe(0);
             done();
-        }, 10);
+        });
     });
 
     it('should be expect event loop is delayed over 500ms', (done) => {
         service.start(options);
 
-        sleep(2000);
+        spawnSync('sleep', ['2']);
 
-        setTimeout(() => {
+        setImmediate(() => {
             const delay = service.getEventLoopDelay();
             expect(delay).toBeGreaterThan(maxDelay);
             done();
-        }, 100);
+        });
     });
 });

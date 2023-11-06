@@ -6,6 +6,11 @@ export declare module IEventLoopDelayCheck {
          * @returns {number} delay in milliseconds
          */
         getEventLoopDelay(): number;
+
+        /**
+         * @returns {number} percentage of event loop utilization
+         */
+        getEventLoopUtilizations(): number;
     }
 
     export interface StartOptions {

@@ -1,3 +1,5 @@
+import { IEventLoopUtilizationsService } from '../event-loop-utilizations/event-loop-utilizations.interface';
+import { EventLoopUtilizationsService } from '../event-loop-utilizations/event-loop-utilizations.service';
 import { IHRTimeService } from '../hr-time-service/hr-time.interface';
 import { HRTimeService } from '../hr-time-service/hr-time.service';
 import { IEventLoopDelayCheck } from './event-loop-delay-check.interface';
@@ -9,12 +11,16 @@ export class EventLoopDelayCheckService implements IEventLoopDelayCheck.Service 
     private _sampleInterval: number = 1000;
     private _minDelay: number = 1000;
 
-    constructor(private _hrTimeService: IHRTimeService = new HRTimeService()) {}
+    constructor(
+        private _hrTimeService: IHRTimeService = new HRTimeService(),
+        private _eventLoopUtilizationsService: IEventLoopUtilizationsService = new EventLoopUtilizationsService(),
+    ) {}
 
     public start({ minDelay, sampleInterval }: IEventLoopDelayCheck.StartOptions): void {
         this._lastCheck = this._hrTimeService.getNow();
         this._sampleInterval = sampleInterval ?? this._sampleInterval;
         this._minDelay = minDelay ?? this._minDelay;
+        this._eventLoopUtilizationsService.start();
 
         this._newCheckTimeout();
     }
@@ -27,11 +33,16 @@ export class EventLoopDelayCheckService implements IEventLoopDelayCheck.Service 
         return this._eventLoopDelay;
     }
 
+    public getEventLoopUtilizations(): number {
+        return this._eventLoopUtilizationsService.getEventLoopUtilization();
+    }
+
     private _checkEventLoopDelay(this: EventLoopDelayCheckService) {
         const now = this._hrTimeService.getNow();
 
         const eventLoopDelay = now - this._lastCheck - this._minDelay;
         this._eventLoopDelay = Math.max(0, eventLoopDelay);
+        this._eventLoopUtilizationsService.getEventLoopUtilization();
 
         this._newCheckTimeout();
         this._lastCheck = now;
