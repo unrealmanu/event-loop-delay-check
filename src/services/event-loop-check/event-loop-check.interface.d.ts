@@ -1,6 +1,6 @@
-export declare module IEventLoopDelayCheck {
+export declare module IEventLoopCheck {
     export interface Service {
-        start(options?: IEventLoopDelayCheckServiceStartOptions): void;
+        start(options?: StartOptions): void;
         stop(): void;
         /**
          * @returns {number} delay in milliseconds
