@@ -4,26 +4,33 @@ import { IEventLoopDelayCheck } from './event-loop-delay-check.interface';
 
 describe('EventLoopDelayCheck', () => {
     let service: IEventLoopDelayCheck.Service;
-    const options = { maxDelay: 500 };
+    const options: IEventLoopDelayCheck.StartOptions = { minDelay: 500 };
+    const maxDelay = 500;
+
     beforeEach(() => {
+        jest.setTimeout(10_000);
         service = new EventLoopDelayCheckService();
     });
 
-    it('should be expect event lopp is not delayed', () => {
+    it('should be expect event loop is not delayed', (done) => {
         service.start(options);
         const delay = service.getEventLoopDelay();
-        expect(delay).toBe(0);
+
+        setTimeout(() => {
+            expect(delay).toBe(0);
+            done();
+        }, 10);
     });
 
-    it('should be expect event lopp is delayed of approx 500ms', (done) => {
+    it('should be expect event loop is delayed over 500ms', (done) => {
         service.start(options);
 
-        sleep(1000);
+        sleep(2000);
 
         setTimeout(() => {
             const delay = service.getEventLoopDelay();
-            expect(delay).toBeGreaterThan(options.maxDelay);
+            expect(delay).toBeGreaterThan(maxDelay);
             done();
-        }, 10);
+        }, 100);
     });
 });

@@ -26,7 +26,7 @@ module.exports = {
             isolatedModules: true,
         },
     },
-    moduleFileExtensions: ['ts'],
+    moduleFileExtensions: ['ts', 'js'],
     reporters: ['default'],
     modulePaths: [compilerOptions.baseUrl],
     moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/' }),
