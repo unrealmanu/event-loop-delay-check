@@ -16,10 +16,10 @@ export class EventLoopDelayCheckService implements IEventLoopCheck.Service {
         private _eventLoopUtilizationsService: IEventLoopUtilizationsService = new EventLoopUtilizationsService(),
     ) {}
 
-    public start({ minDelay, sampleInterval }: IEventLoopCheck.StartOptions): void {
+    public start(options?: IEventLoopCheck.StartOptions): void {
         this._lastCheck = this._hrTimeService.getNow();
-        this._sampleInterval = sampleInterval ?? this._sampleInterval;
-        this._minDelay = minDelay ?? this._minDelay;
+        this._sampleInterval = options?.sampleInterval ?? this._sampleInterval;
+        this._minDelay = options?.minDelay ?? this._minDelay;
         this._eventLoopUtilizationsService.start();
 
         this._newCheckTimeout();

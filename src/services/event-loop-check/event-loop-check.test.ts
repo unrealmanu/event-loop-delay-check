@@ -10,10 +10,10 @@ describe('EventLoopDelay', () => {
     beforeEach(() => {
         jest.setTimeout(10_000);
         service = new EventLoopDelayCheckService();
+        service.start(options);
     });
 
     it('should be expect event loop is not delayed', (done) => {
-        service.start(options);
         const delayInMs = service.getEventLoopDelay();
 
         setImmediate(() => {
@@ -23,8 +23,6 @@ describe('EventLoopDelay', () => {
     });
 
     it('should be expect event loop is delayed over 500ms', (done) => {
-        service.start(options);
-
         spawnSync('sleep', ['2']);
 
         setImmediate(() => {
@@ -32,5 +30,25 @@ describe('EventLoopDelay', () => {
             expect(delay).toBeGreaterThan(maxDelay);
             done();
         });
+    });
+
+    it('should be expect event loop check is stopped', (done) => {
+        expect(service['_checkTimeout']).toBeDefined();
+        service.stop();
+        setImmediate(() => {
+            expect(service['_checkTimeout']).toEqual(expect.objectContaining({ _destroyed: true }));
+            done();
+        });
+    });
+
+    it('should be expect event loop utilization', () => {
+        const utilization = service.getEventLoopUtilizations();
+        expect(typeof utilization).toBe('number');
+    });
+
+    it('should be start with mindelay default value', () => {
+        const service = new EventLoopDelayCheckService();
+        service.start();
+        expect(service['_minDelay']).toBe(1000);
     });
 });
