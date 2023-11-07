@@ -104,3 +104,4 @@ typings/
 # Test and coverage report file
 reports
 .DS_Store
+.npmrc
