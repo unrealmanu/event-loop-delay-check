@@ -17,7 +17,8 @@
                 '__test__/**',
                 '__tests__/**',
                 'node_modules/**',
-                '__snapshots__/**'
+                '__snapshots__/**',
+                '*.test.ts',
             ],
                 nonull: true,
   },

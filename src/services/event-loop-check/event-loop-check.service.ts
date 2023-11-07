@@ -2,9 +2,9 @@ import { IEventLoopUtilizationsService } from '../event-loop-utilizations/event-
 import { EventLoopUtilizationsService } from '../event-loop-utilizations/event-loop-utilizations.service';
 import { IHRTimeService } from '../hr-time-service/hr-time.interface';
 import { HRTimeService } from '../hr-time-service/hr-time.service';
-import { IEventLoopCheck } from './event-loop-check.interface';
+import { IEventLoopCheckService, IEventLoopCheckServiceStartOptions } from './event-loop-check.interface';
 
-export class EventLoopDelayCheckService implements IEventLoopCheck.Service {
+export class EventLoopDelayCheckService implements IEventLoopCheckService {
     private _lastCheck: number = 0;
     private _eventLoopDelay: number = 0;
     private _checkTimeout: NodeJS.Timeout;
@@ -16,7 +16,7 @@ export class EventLoopDelayCheckService implements IEventLoopCheck.Service {
         private _eventLoopUtilizationsService: IEventLoopUtilizationsService = new EventLoopUtilizationsService(),
     ) {}
 
-    public start(options?: IEventLoopCheck.StartOptions): void {
+    public start(options?: IEventLoopCheckServiceStartOptions): void {
         this._lastCheck = this._hrTimeService.getNow();
         this._sampleInterval = options?.sampleInterval ?? this._sampleInterval;
         this._minDelay = options?.minDelay ?? this._minDelay;

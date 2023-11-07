@@ -1,10 +1,10 @@
 import { spawnSync } from 'node:child_process';
-import { IEventLoopCheck } from './event-loop-check.interface';
+import { IEventLoopCheckService, IEventLoopCheckServiceStartOptions } from './event-loop-check.interface';
 import { EventLoopDelayCheckService } from './event-loop-check.service';
 
 describe('EventLoopDelay', () => {
-    let service: IEventLoopCheck.Service;
-    const options: IEventLoopCheck.StartOptions = { minDelay: 500 };
+    let service: IEventLoopCheckService;
+    const options: IEventLoopCheckServiceStartOptions = { minDelay: 500 };
     const maxDelay = 500;
 
     beforeEach(() => {
