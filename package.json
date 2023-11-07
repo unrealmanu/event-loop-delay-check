@@ -8,8 +8,7 @@
     "main": "dist/index.js",
     "typings": "dist/index.d.ts",
     "files": [
-        "dist",
-        "src"
+        "dist"
     ],
     "scripts": {
         "build": "yarn lint && yarn run build:clean && tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
