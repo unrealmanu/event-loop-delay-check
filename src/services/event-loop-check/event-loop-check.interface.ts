@@ -1,5 +1,5 @@
 export interface IEventLoopCheckService {
-    start(options?: StartOptions): void;
+    start(options?: IEventLoopCheckServiceStartOptions): void;
     stop(): void;
     /**
      * @returns {number} delay in milliseconds
