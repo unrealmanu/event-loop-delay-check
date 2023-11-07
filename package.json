@@ -4,7 +4,7 @@
     "description": "Check the event loop delay",
     "repository": "https://github.com/unrealmanu/event-loop-delay-check",
     "license": "MIT",
-    "author": "Manuel Trebbi <unrealmanu@live.it>",
+    "author": "Manuel Trebbi <unrealmanumaster@gmail.com>",
     "main": "dist/index.js",
     "typings": "dist/index.d.ts",
     "files": [
