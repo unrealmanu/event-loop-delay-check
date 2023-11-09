@@ -19,7 +19,7 @@ export class EluMonitorService implements IEluMonitorService {
     public create() {
         this._eventLoopDelayCheckService.start();
 
-        this._eluInterval = setInterval(this._checkStatus.bind(this), 500);
+        this._eluInterval = setInterval(this._checkStatus.bind(this), this._checkIntervalMs);
 
         this._eluInterval.unref();
     }
