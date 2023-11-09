@@ -1,6 +1,6 @@
 {
     "name": "event-loop-delay-check",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "description": "Check the event loop delay",
     "repository": "https://github.com/unrealmanu/event-loop-delay-check",
     "license": "MIT",
@@ -55,7 +55,7 @@
         "typescript": "^5.2.2"
     },
     "engines": {
-        "node": ">=18.16"
+        "node": ">=14"
     },
     "publishConfig": {
         "registry": "https://registry.npmjs.org"
