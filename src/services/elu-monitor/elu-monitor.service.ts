@@ -6,7 +6,7 @@ export class EluMonitorService implements IEluMonitorService {
     constructor(private _eventLoopDelayCheckService: IEventLoopCheckService = new EventLoopDelayCheckService()) {}
     private _eluInterval: NodeJS.Timeout;
     private _criticalThreshold: number = 90;
-    private _checkIntervalMs: number = 100;
+    private _checkIntervalMs: number = 500;
     private _statusCheckCallback?: EluMonitorServiceOptions['statusCheckCallback'];
     private _isCriticalStatus = false;
 
