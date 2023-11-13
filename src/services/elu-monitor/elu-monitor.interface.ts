@@ -1,6 +1,7 @@
 export type EluMonitorServiceOptions = {
     checkIntervalMs?: number;
     criticalThreshold?: number;
+    criticalDelayMs: number;
     statusCheckCallback?: (isCritical: boolean, eluUtilization: number) => void;
 };
 

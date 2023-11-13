@@ -6,12 +6,21 @@ export class EluMonitorService implements IEluMonitorService {
     constructor(private _eventLoopDelayCheckService: IEventLoopCheckService = new EventLoopDelayCheckService()) {}
     private _eluInterval: NodeJS.Timeout;
     private _criticalThreshold: number = 90;
+    private _criticalDelayMs: number = 5000;
+
     private _checkIntervalMs: number = 500;
     private _statusCheckCallback?: EluMonitorServiceOptions['statusCheckCallback'];
     private _isCriticalStatus = false;
 
-    public setConfig({ criticalThreshold, statusCheckCallback, checkIntervalMs }: EluMonitorServiceOptions) {
+    public setConfig({
+        criticalThreshold,
+        statusCheckCallback,
+        checkIntervalMs,
+        criticalDelayMs,
+    }: EluMonitorServiceOptions) {
         this._criticalThreshold = criticalThreshold ?? this._criticalThreshold;
+        this._criticalDelayMs = criticalDelayMs ?? this._criticalDelayMs;
+
         this._checkIntervalMs = Math.max(checkIntervalMs ?? this._checkIntervalMs);
         this._statusCheckCallback = statusCheckCallback;
     }
@@ -35,10 +44,13 @@ export class EluMonitorService implements IEluMonitorService {
 
     private _checkStatus(this: EluMonitorService) {
         const eluUtilizations = this._eventLoopDelayCheckService.getEventLoopUtilizations();
+        const eluDelay = this._eventLoopDelayCheckService.getEventLoopDelay();
 
-        const isCritical = eluUtilizations > this._criticalThreshold;
-        this._isCriticalStatus = isCritical;
+        const isCriticalThreshold = eluUtilizations > this._criticalThreshold;
+        const isCriticalDelay = eluDelay > this._criticalDelayMs;
 
-        this?._statusCheckCallback(isCritical, eluUtilizations);
+        this._isCriticalStatus = isCriticalThreshold && isCriticalDelay;
+
+        this?._statusCheckCallback(isCriticalThreshold, eluUtilizations);
     }
 }

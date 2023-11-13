@@ -1,6 +1,6 @@
 {
     "name": "event-loop-delay-check",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "description": "Check the event loop delay",
     "repository": "https://github.com/unrealmanu/event-loop-delay-check",
     "license": "MIT",
