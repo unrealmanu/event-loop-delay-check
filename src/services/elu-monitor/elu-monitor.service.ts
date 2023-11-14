@@ -25,7 +25,7 @@ export class EluMonitorService implements IEluMonitorService {
         this._statusCheckCallback = statusCheckCallback;
     }
 
-    public setStatuCheckCallback(statusCheckCallback: StatusCheckCallback) {
+    public setStatusCheckCallback(statusCheckCallback: StatusCheckCallback) {
         this._statusCheckCallback = statusCheckCallback;
     }
 

@@ -11,6 +11,6 @@ export interface IEluMonitorService {
     create(): void;
     destroy(): void;
     setConfig(options: EluMonitorServiceOptions): void;
-    setStatuCheckCallback(statusCheckCallback: StatusCheckCallback);
+    setStatusCheckCallback(statusCheckCallback: StatusCheckCallback);
     isCriticalStatus(): boolean;
 }
