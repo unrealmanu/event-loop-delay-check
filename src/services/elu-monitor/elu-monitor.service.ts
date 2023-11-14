@@ -1,6 +1,6 @@
 import { EventLoopDelayCheckService } from '../event-loop-check';
 import { IEventLoopCheckService } from '../event-loop-check/event-loop-check.interface';
-import { EluMonitorServiceOptions, IEluMonitorService } from './elu-monitor.interface';
+import { EluMonitorServiceOptions, IEluMonitorService, StatusCheckCallback } from './elu-monitor.interface';
 
 export class EluMonitorService implements IEluMonitorService {
     constructor(private _eventLoopDelayCheckService: IEventLoopCheckService = new EventLoopDelayCheckService()) {}
@@ -22,6 +22,10 @@ export class EluMonitorService implements IEluMonitorService {
         this._criticalDelayMs = criticalDelayMs ?? this._criticalDelayMs;
 
         this._checkIntervalMs = Math.max(checkIntervalMs ?? this._checkIntervalMs);
+        this._statusCheckCallback = statusCheckCallback;
+    }
+
+    public setStatuCheckCallback(statusCheckCallback: StatusCheckCallback) {
         this._statusCheckCallback = statusCheckCallback;
     }
 

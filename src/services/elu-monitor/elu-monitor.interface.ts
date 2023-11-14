@@ -1,13 +1,16 @@
+export type StatusCheckCallback = (isCritical: boolean, eluUtilization: number) => void;
+
 export type EluMonitorServiceOptions = {
     checkIntervalMs?: number;
     criticalThreshold?: number;
     criticalDelayMs: number;
-    statusCheckCallback?: (isCritical: boolean, eluUtilization: number) => void;
+    statusCheckCallback?: StatusCheckCallback;
 };
 
 export interface IEluMonitorService {
-    setConfig(options: EluMonitorServiceOptions): void;
     create(): void;
     destroy(): void;
+    setConfig(options: EluMonitorServiceOptions): void;
+    setStatuCheckCallback(statusCheckCallback: StatusCheckCallback);
     isCriticalStatus(): boolean;
 }
