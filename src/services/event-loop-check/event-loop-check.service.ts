@@ -8,18 +8,28 @@ export class EventLoopDelayCheckService implements IEventLoopCheckService {
     private _lastCheck: number = 0;
     private _eventLoopDelay: number = 0;
     private _checkTimeout: NodeJS.Timeout;
-    private _sampleInterval: number = 1000;
-    private _minDelay: number = 1000;
+    private _sampleInterval: number = 500;
+    private _minDelay: number = 500;
 
     constructor(
         private _hrTimeService: IHRTimeService = new HRTimeService(),
         private _eventLoopUtilizationsService: IEventLoopUtilizationsService = new EventLoopUtilizationsService(),
     ) {}
 
+    /**
+     * @param options.sampleInterval - The sample od interval in milliseconds at which the event loop delay is calculated.
+     * @param options.minDelay - The minimum delay in milliseconds before the event loop is considered blocked.
+     * @returns void
+     */
     public start(options?: IEventLoopCheckServiceStartOptions): void {
         this._lastCheck = this._hrTimeService.getNow();
-        this._sampleInterval = options?.sampleInterval ?? this._sampleInterval;
-        this._minDelay = options?.minDelay ?? this._minDelay;
+
+        const optionsSampleInterval = options?.sampleInterval || 0;
+        const optionsMinDelay = options?.minDelay || 0;
+
+        this._sampleInterval = Math.max(optionsSampleInterval, this._sampleInterval);
+        this._minDelay = Math.max(optionsMinDelay, this._minDelay);
+
         this._eventLoopUtilizationsService.start();
 
         this._newCheckTimeout();

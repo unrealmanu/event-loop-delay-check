@@ -7,8 +7,8 @@ export class EluMonitorService implements IEluMonitorService {
     private _eluInterval: NodeJS.Timeout;
     private _criticalThreshold: number = 90;
     private _criticalDelayMs: number = 5000;
+    private _checkIntervalMs: number = 100;
 
-    private _checkIntervalMs: number = 500;
     private _statusCheckCallback?: EluMonitorServiceOptions['statusCheckCallback'];
     private _isCriticalStatus = false;
 
@@ -21,7 +21,9 @@ export class EluMonitorService implements IEluMonitorService {
         this._criticalThreshold = criticalThreshold ?? this._criticalThreshold;
         this._criticalDelayMs = criticalDelayMs ?? this._criticalDelayMs;
 
+        this._checkIntervalMsIsLow(checkIntervalMs);
         this._checkIntervalMs = Math.max(checkIntervalMs ?? this._checkIntervalMs);
+
         this._statusCheckCallback = statusCheckCallback;
     }
 
@@ -55,6 +57,14 @@ export class EluMonitorService implements IEluMonitorService {
 
         this._isCriticalStatus = isCriticalThreshold && isCriticalDelay;
 
-        this?._statusCheckCallback(isCriticalThreshold, eluUtilizations);
+        if (typeof this?._statusCheckCallback === 'function') {
+            this._statusCheckCallback(isCriticalThreshold, eluUtilizations);
+        }
+    }
+
+    private _checkIntervalMsIsLow(checkIntervalMs: number) {
+        if (checkIntervalMs < this._checkIntervalMs) {
+            console.warn(`checkIntervalMs is too low, the minimum accepted is ${this._checkIntervalMs}ms`);
+        }
     }
 }

@@ -49,6 +49,6 @@ describe('EventLoopDelay', () => {
     it('should be start with mindelay default value', () => {
         const service = new EventLoopDelayCheckService();
         service.start();
-        expect(service['_minDelay']).toBe(1000);
+        expect(service['_minDelay']).toBe(500);
     });
 });
